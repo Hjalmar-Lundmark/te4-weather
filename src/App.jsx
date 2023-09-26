@@ -38,8 +38,12 @@ function App() {
       <h1>Darth Väder</h1>
       {weatherData.main ? (
         <div>
-          <h1>City: {weatherData.name}</h1>
-          <h1>Temperature: {(weatherData.main.temp - 273.15).toFixed(2) + ' C'}</h1>
+          <h2>lat: {lat}</h2>
+          <h2>long: {long}</h2>
+          <h2>City: {weatherData.name}</h2>
+          <h2>Temperature: {(weatherData.main.temp - 273.15).toFixed(2) + ' C'}</h2>
+          <h2>Feels like: {(weatherData.main.feels_like - 273.15).toFixed(2) + ' C'}</h2>
+          <h2>Weather: {weatherData.weather[0].description}</h2>
         </div>
       ) :
         (
