@@ -1,5 +1,7 @@
 import './Spinner.css';
 
+//todo: make this spin
+
 function Spinner() {
 
 
