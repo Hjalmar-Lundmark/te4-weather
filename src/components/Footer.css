@@ -1,0 +1,10 @@
+footer {
+    background-color: black;
+    color: white;
+    padding-bottom: 2rem;
+    padding-top: 1rem;
+}
+
+footer>*>p>a {
+    color: lightblue;
+}
