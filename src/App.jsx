@@ -6,6 +6,7 @@ function App() {
   const [lat, setLat] = useState({})
   const [long, setLong] = useState({})
   const [weatherData, setWeatherData] = useState([])
+  const [counter, setCounter] = useState(60);
 
   useEffect(() => {
 
@@ -13,7 +14,8 @@ function App() {
       // If lat and long are not in local storage, get them from the browser
       if (false) {
         // Todo: add timer
-
+        setLat(localStorage.getItem('lat'))
+        setLong(localStorage.getItem('long'))
       } else {
         navigator.geolocation.getCurrentPosition(function (position) {
           setLat(position.coords.latitude)
@@ -45,15 +47,22 @@ function App() {
     fetchWeather()
   }, [lat, long])
 
+  useEffect(() => {
+    console.log(counter)
+    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+  }, [counter]);
+
   return (
     <main className='autoWidth'>
       <h1>Darth Väder</h1>
       {weatherData.main ? (
         <div>
           <h2>City: {weatherData.name}</h2>
-          <h2>Temperature: {(weatherData.main.temp - 273.15).toFixed(2) + ' C'}</h2>
-          <h2>Feels like: {(weatherData.main.feels_like - 273.15).toFixed(2) + ' C'}</h2>
+          <h2>Temperature: {(weatherData.main.temp - 273.15).toFixed(2) + ' C°'}</h2>
+          <h2>Feels like: {(weatherData.main.feels_like - 273.15).toFixed(2) + ' C°'}</h2>
           <h2>Weather: {weatherData.weather[0].description}</h2>
+          <h2>Clouds: {weatherData.clouds.all + '%'} of the sky covered, at the height of {weatherData.cod} m</h2>
+          <h2>Pressure: {weatherData.main.pressure} hPa</h2>
           <h2>Humidity: {weatherData.main.humidity + '%'}</h2>
           <h2>Wind:
             {/* Shows wind speed as a word instead of a number */}
@@ -88,8 +97,9 @@ function App() {
               <> East</>
             ) : (
               <> Error (wind direction not found)</>
-            )}
+            )} ({weatherData.wind.deg + '°'})
           </h2>
+          <h2>Visibility: {weatherData.visibility} meter</h2>
           {lat && long ? (
             <>
               <h2>Latitude: {lat} Longitude: {long}</h2>

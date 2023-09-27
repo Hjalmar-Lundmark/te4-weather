@@ -33,7 +33,7 @@
   --space-s-l: clamp(1.13rem, calc(0.63rem + 2.42vw), 2.50rem);
   /*--flow-space:*/
 
-  --color-bg: black;
+  --color-bg: #222;
   --color-fg: red;
   --color-accent: white;
 }
