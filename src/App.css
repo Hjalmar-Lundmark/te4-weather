@@ -1,0 +1,83 @@
+:root {
+  --base-font: sans-serif;
+  --step--2: clamp(0.78rem, calc(0.77rem + 0.03vw), 0.80rem);
+  --step--1: clamp(0.94rem, calc(0.91rem + 0.11vw), 1.00rem);
+  --step-0: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
+  --step-1: clamp(1.35rem, calc(1.27rem + 0.37vw), 1.56rem);
+  --step-2: clamp(1.62rem, calc(1.50rem + 0.59vw), 1.95rem);
+  --step-3: clamp(1.94rem, calc(1.76rem + 0.87vw), 2.44rem);
+  --step-4: clamp(2.33rem, calc(2.07rem + 1.26vw), 3.05rem);
+  --step-5: clamp(2.80rem, calc(2.43rem + 1.79vw), 3.82rem);
+
+  --space-3xs: clamp(0.31rem, calc(0.31rem + 0.00vw), 0.31rem);
+  --space-2xs: clamp(0.56rem, calc(0.54rem + 0.11vw), 0.63rem);
+  --space-xs: clamp(0.88rem, calc(0.85rem + 0.11vw), 0.94rem);
+  --space-s: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
+  --space-m: clamp(1.69rem, calc(1.62rem + 0.33vw), 1.88rem);
+  --space-l: clamp(2.25rem, calc(2.16rem + 0.44vw), 2.50rem);
+  --space-xl: clamp(3.38rem, calc(3.24rem + 0.66vw), 3.75rem);
+  --space-2xl: clamp(4.50rem, calc(4.32rem + 0.88vw), 5.00rem);
+  --space-3xl: clamp(6.75rem, calc(6.48rem + 1.32vw), 7.50rem);
+
+  /* One-up pairs */
+  --space-3xs-2xs: clamp(0.31rem, calc(0.20rem + 0.55vw), 0.63rem);
+  --space-2xs-xs: clamp(0.56rem, calc(0.43rem + 0.66vw), 0.94rem);
+  --space-xs-s: clamp(0.88rem, calc(0.74rem + 0.66vw), 1.25rem);
+  --space-s-m: clamp(1.13rem, calc(0.85rem + 1.32vw), 1.88rem);
+  --space-m-l: clamp(1.69rem, calc(1.39rem + 1.43vw), 2.50rem);
+  --space-l-xl: clamp(2.25rem, calc(1.71rem + 2.64vw), 3.75rem);
+  --space-xl-2xl: clamp(3.38rem, calc(2.79rem + 2.86vw), 5.00rem);
+  --space-2xl-3xl: clamp(4.50rem, calc(3.41rem + 5.27vw), 7.50rem);
+
+  /* Custom pairs */
+  --space-s-l: clamp(1.13rem, calc(0.63rem + 2.42vw), 2.50rem);
+  /*--flow-space:*/
+
+  --color-bg: black;
+  --color-fg: red;
+  --color-accent: white;
+}
+
+body {
+  font-family: var(--base-font);
+  color: var(--color-fg);
+  background-color: var(--color-bg);
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+}
+
+h1 {
+  font-size: var(--step-5);
+}
+
+h2 {
+  font-size: var(--step-2);
+}
+
+h3 {
+  font-size: var(--step-1);
+}
+
+p {
+  font-size: var(--step-0);
+  font-weight: 400;
+}
+
+.section {
+  padding-top: var(--space-l);
+  padding-bottom: var(--space-l);
+}
+
+.flow>*+* {
+  margin-top: var(--flow-space, 1em);
+}
+
+.autoWidth {
+  width: min(55rem, 100vw - 2rem);
+  margin-inline: auto;
+}

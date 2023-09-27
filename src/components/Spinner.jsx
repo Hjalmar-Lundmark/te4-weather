@@ -7,7 +7,7 @@ function Spinner() {
 
     return (
         <>
-            <h1>Just pretend I spin</h1>
+            <h2>Just pretend I spin</h2>
         </>
     )
 }
