@@ -90,6 +90,14 @@ function App() {
               <> Error (wind direction not found)</>
             )}
           </h2>
+          {lat && long ? (
+            <>
+              <h2>Latitude: {lat} Longitude: {long}</h2>
+              <iframe src={`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d269.27453942029365!2d${long}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ssv!2sse!4v1695801572532!5m2!1ssv!2sse'`} width="600" height="450" loading="lazy" ></iframe>
+            </>
+          ) : (
+            <h2>Latitude and longitude not found</h2>
+          )}
         </div>
       ) :
         (
