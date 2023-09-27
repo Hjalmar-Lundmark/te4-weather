@@ -10,13 +10,16 @@ function App() {
   useEffect(() => {
 
     async function fetchWeather() {
-      console.log('fetching weather: ' + typeof (weatherData))
       navigator.geolocation.getCurrentPosition(function (position) {
         setLat(position.coords.latitude)
         setLong(position.coords.longitude)
       });
 
-      if (lat === 0 || long === 0) {
+      console.log(lat, long)
+      console.log(typeof (lat), typeof (long))
+      if (typeof (lat) === 'object' || typeof (long) === 'object') {
+        console.log('lat or long is 0')
+        setWeatherData([])
         return
       }
 
@@ -38,12 +41,25 @@ function App() {
       <h1>Darth Väder</h1>
       {weatherData.main ? (
         <div>
-          <h2>lat: {lat}</h2>
-          <h2>long: {long}</h2>
           <h2>City: {weatherData.name}</h2>
           <h2>Temperature: {(weatherData.main.temp - 273.15).toFixed(2) + ' C'}</h2>
           <h2>Feels like: {(weatherData.main.feels_like - 273.15).toFixed(2) + ' C'}</h2>
           <h2>Weather: {weatherData.weather[0].description}</h2>
+          <h2>Humidity: {weatherData.main.humidity + '%'}</h2>
+          <h2>Wind: {weatherData.wind.speed + ' m/s'} from
+            {/* I think this works, maybe I'll add southwest, northeast, etc */}
+            {weatherData.wind.deg >= 135 && weatherData.wind.deg < 225 ? (
+              <> South</>
+            ) : weatherData.wind.deg >= 225 && weatherData.wind.deg < 315 ? (
+              <> West</>
+            ) : weatherData.wind.deg >= 315 && weatherData.wind.deg < 360 || weatherData.wind.deg >= 0 && weatherData.wind.deg < 45 ? (
+              <> North</>
+            ) : weatherData.wind.deg >= 45 && weatherData.wind.deg < 135 ? (
+              <> East</>
+            ) : (
+              <> Error (wind direction not found)</>
+            )}
+          </h2>
         </div>
       ) :
         (
