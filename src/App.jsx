@@ -12,7 +12,7 @@ function App() {
     async function fetchWeather() {
       // If lat and long are not in local storage, get them from the browser
       navigator.geolocation.getCurrentPosition(function (position) {
-        if (localStorage.getItem('lat') && localStorage.getItem('long') && localStorage.getItem('lat') !== position.coords.latitude && localStorage.getItem('long') !== position.coords.longitude) {
+        if (localStorage.getItem('lat') !== position.coords.latitude || localStorage.getItem('long') !== position.coords.longitude) {
           setLat(position.coords.latitude)
           setLong(position.coords.longitude)
         } else {
@@ -35,6 +35,7 @@ function App() {
       // If the data is less than 10 minutes old, don't fetch new data
       if (localStorage.getItem('fetchTime') && new Date().getTime() - localStorage.getItem('fetchTime') < 600000) {
         console.log('data is less than 10 minutes old')
+        setWeatherData(JSON.parse(localStorage.getItem('weatherData')))
         return
       }
 
@@ -43,6 +44,7 @@ function App() {
         .then(result => {
           console.log(result)
           setWeatherData(result);
+          localStorage.setItem('weatherData', JSON.stringify(result));
           localStorage.setItem('fetchTime', new Date().getTime());
         }).catch(err => {
           console.log(err)
@@ -61,6 +63,16 @@ function App() {
           <h2>Temperature: {(weatherData.main.temp - 273.15).toFixed(2) + ' C°'}</h2>
           <h2>Feels like: {(weatherData.main.feels_like - 273.15).toFixed(2) + ' C°'}</h2>
           <h2>Weather: {weatherData.weather[0].description}</h2>
+          {weatherData.rain ? (
+            <h2>Rain: {weatherData.rain["1h"] + ' mm/h'}</h2>
+          ) : (
+            <></>
+          )}
+          {weatherData.weather[0].icon ? (
+            <img src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`} alt={weatherData.weather[0].description} />
+          ) : (
+            <></>
+          )}
           <h2>Clouds: {weatherData.clouds.all + '%'} of the sky covered, at the height of {weatherData.cod} m</h2>
           <h2>Pressure: {weatherData.main.pressure} hPa</h2>
           <h2>Humidity: {weatherData.main.humidity + '%'}</h2>
@@ -112,7 +124,7 @@ function App() {
       ) :
         (
           <>
-            <h2>Loading...</h2>
+            <h2>Checking if Darth Väder deems you worthy...</h2>
             <Spinner />
           </>
         )
