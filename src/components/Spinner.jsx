@@ -6,9 +6,7 @@ function Spinner() {
 
 
     return (
-        <>
-            <h2>Just pretend I spin</h2>
-        </>
+        <div data-abs="true" className="spinner"></div>
     )
 }
 

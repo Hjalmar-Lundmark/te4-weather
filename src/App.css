@@ -111,4 +111,6 @@ main {
   background-color: var(--color-accent);
   padding: 1rem;
   border-radius: 15px;
+  color: var(--color-bg);
+  border: solid 2px var(--color-fg);
 }
