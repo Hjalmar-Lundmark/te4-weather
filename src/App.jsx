@@ -64,7 +64,7 @@ function App() {
         <h1>Darth Väder</h1>
         {weatherData.main ? (
           <>
-            <div className='grid' data-layout='50-50' data-rows='masonry'>
+            <div className='grid' data-rows='masonry'>
               <div className='gridCard'>
                 <h3>City:</h3>
                 <h2>{weatherData.name}</h2>

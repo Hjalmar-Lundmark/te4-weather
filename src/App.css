@@ -94,6 +94,7 @@ main {
 .grid {
   display: grid;
   gap: 1rem;
+  --grid-placement: auto-fit;
   grid-template-columns: repeat(var(--grid-placement, auto-fill), minmax(var(--grid-min-item-size, 16rem), 1fr));
   margin-bottom: 2rem;
 }
@@ -101,10 +102,6 @@ main {
 .grid[data-rows="masonry"] {
   align-items: start;
   grid-template-rows: masonry;
-}
-
-.grid[data-layout="50-50"] {
-  --grid-placement: auto-fit;
 }
 
 .gridCard {
