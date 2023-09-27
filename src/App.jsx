@@ -6,25 +6,23 @@ function App() {
   const [lat, setLat] = useState({})
   const [long, setLong] = useState({})
   const [weatherData, setWeatherData] = useState([])
-  const [counter, setCounter] = useState(60);
 
   useEffect(() => {
 
     async function fetchWeather() {
       // If lat and long are not in local storage, get them from the browser
-      if (false) {
-        // Todo: add timer
-        setLat(localStorage.getItem('lat'))
-        setLong(localStorage.getItem('long'))
-      } else {
-        navigator.geolocation.getCurrentPosition(function (position) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        if (localStorage.getItem('lat') && localStorage.getItem('long') && localStorage.getItem('lat') !== position.coords.latitude && localStorage.getItem('long') !== position.coords.longitude) {
           setLat(position.coords.latitude)
           setLong(position.coords.longitude)
+        } else {
+          setLat(localStorage.getItem('lat'))
+          setLong(localStorage.getItem('long'))
+        }
 
-          localStorage.setItem('lat', position.coords.latitude)
-          localStorage.setItem('long', position.coords.longitude)
-        });
-      }
+        localStorage.setItem('lat', position.coords.latitude)
+        localStorage.setItem('long', position.coords.longitude)
+      });
 
       console.log(lat, long)
       console.log(typeof (lat), typeof (long))
@@ -34,11 +32,18 @@ function App() {
         return
       }
 
+      // If the data is less than 10 minutes old, don't fetch new data
+      if (localStorage.getItem('fetchTime') && new Date().getTime() - localStorage.getItem('fetchTime') < 600000) {
+        console.log('data is less than 10 minutes old')
+        return
+      }
+
       await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${import.meta.env.VITE_API_KEY}`)
         .then(res => res.json())
         .then(result => {
           console.log(result)
           setWeatherData(result);
+          localStorage.setItem('fetchTime', new Date().getTime());
         }).catch(err => {
           console.log(err)
         });
@@ -46,11 +51,6 @@ function App() {
 
     fetchWeather()
   }, [lat, long])
-
-  useEffect(() => {
-    console.log(counter)
-    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
-  }, [counter]);
 
   return (
     <main className='autoWidth'>
