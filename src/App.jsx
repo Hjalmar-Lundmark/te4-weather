@@ -13,9 +13,8 @@ function App() {
   useEffect(() => {
 
     async function fetchWeather() {
-      // If lat and long are not in local storage, get them from the browser
       navigator.geolocation.getCurrentPosition(function (position) {
-        if (localStorage.getItem('lat') !== position.coords.latitude || localStorage.getItem('long') !== position.coords.longitude) {
+        if (parseFloat(localStorage.getItem('lat')) !== position.coords.latitude || parseFloat(localStorage.getItem('long')) !== position.coords.longitude) {
           setLat(position.coords.latitude)
           setLong(position.coords.longitude)
           newLocation = true
@@ -37,7 +36,7 @@ function App() {
       }
 
       // If the data is less than 10 minutes old, don't fetch new data
-      if (localStorage.getItem('fetchTime') && new Date().getTime() - localStorage.getItem('fetchTime') < 600000 && newLocation === false) {
+      if (localStorage.getItem('fetchTime') && new Date().getTime() - localStorage.getItem('fetchTime') < 600000 && newLocation !== false) {
         console.log('data is less than 10 minutes old')
         setWeatherData(JSON.parse(localStorage.getItem('weatherData')))
         return
