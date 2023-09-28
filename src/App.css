@@ -35,7 +35,7 @@
 
   --color-bg: #222;
   --color-fg: red;
-  --color-accent: lightblue;
+  --color-accent: rgb(255, 75, 75);
 }
 
 body {
