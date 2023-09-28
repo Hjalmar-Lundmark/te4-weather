@@ -11,7 +11,6 @@ function App() {
   var quotes = ['Luke... I am your weather app', 'I find your lack of faith disturbing', 'May the weather be with you', 'It is your destiny. Join me, and together we can view the weather, as app and user.', 'The ability to destroy a planet is insignificant next to the power of viewing the weather.', 'Anakin WeatherIgnorer was weak. I destroyed him.']
 
   useEffect(() => {
-
     async function fetchWeather() {
       navigator.geolocation.getCurrentPosition(function (position) {
         if (parseFloat(localStorage.getItem('lat')) !== position.coords.latitude || parseFloat(localStorage.getItem('long')) !== position.coords.longitude) {
@@ -56,6 +55,41 @@ function App() {
 
     fetchWeather()
   }, [lat, long])
+
+  // I used these for wind names and speeds: https://www.weather.gov/mfl/beaufort https://www.smhi.se/kunskapsbanken/meteorologi/vind/skalor-for-vindhastighet-1.252     
+  function getWind() {
+    if (weatherData.wind.speed <= 0.2) {
+      return 'Calm'
+    } else if (weatherData.wind.speed > 0.2 && weatherData.wind.speed <= 3.3) {
+      return 'Light Breeze'
+    } else if (weatherData.wind.speed > 3.3 && weatherData.wind.speed <= 7.9) {
+      return 'Moderate Breeze'
+    } else if (weatherData.wind.speed > 7.9 && weatherData.wind.speed <= 13.8) {
+      return 'Strong Breeze'
+    } else if (weatherData.wind.speed > 13.8 && weatherData.wind.speed <= 24.4) {
+      return 'Severe gale'
+    } else if (weatherData.wind.speed > 24.4 && weatherData.wind.speed <= 32.6) {
+      return 'Storm'
+    } else if (weatherData.wind.speed > 32.6) {
+      return 'Hurricane'
+    } else {
+      return 'Error (wind speed not found)'
+    }
+  }
+
+  function getWindDir() {
+    if (weatherData.wind.deg >= 135 && weatherData.wind.deg < 225) {
+      return 'South'
+    } else if (weatherData.wind.deg >= 225 && weatherData.wind.deg < 315) {
+      return 'West'
+    } else if (weatherData.wind.deg >= 315 && weatherData.wind.deg < 360 || weatherData.wind.deg >= 0 && weatherData.wind.deg < 45) {
+      return 'North'
+    } else if (weatherData.wind.deg >= 45 && weatherData.wind.deg < 135) {
+      return 'East'
+    } else {
+      return 'Error (wind direction not found)'
+    }
+  }
 
   return (
     <>
@@ -102,45 +136,14 @@ function App() {
               </div>
               <div className='gridCard'>
                 <h3>Wind:</h3>
-                {/* Shows wind speed as a word instead of a number */}
-                {/* I used these for wind names and speeds: https://www.weather.gov/mfl/beaufort https://www.smhi.se/kunskapsbanken/meteorologi/vind/skalor-for-vindhastighet-1.252 */}
                 <h2>
-                  {weatherData.wind.speed <= 0.2 ? (
-                    <> Calm </>
-                  ) : weatherData.wind.speed > 0.2 && weatherData.wind.speed <= 3.3 ? (
-                    <> Light Breeze </>
-                  ) : weatherData.wind.speed > 3.3 && weatherData.wind.speed <= 7.9 ? (
-                    <> Moderate Breeze </>
-                  ) : weatherData.wind.speed > 7.9 && weatherData.wind.speed <= 13.8 ? (
-                    <> Strong Breeze </>
-                  ) : weatherData.wind.speed > 13.8 && weatherData.wind.speed <= 24.4 ? (
-                    <> Severe gale </>
-                  ) : weatherData.wind.speed > 24.4 && weatherData.wind.speed <= 32.6 ? (
-                    <> Storm </>
-                  ) : weatherData.wind.speed > 32.6 ? (
-                    <> Hurricane </>
-                  ) : (
-                    <> Error (wind speed not found)</>
-                  )}
-                  ({weatherData.wind.speed + ' m/s'})
+                  {getWind()} ({weatherData.wind.speed + ' m/s'})
                 </h2>
               </div>
               <div className='gridCard'>
                 <h3>Wind direction:</h3>
                 <h2>
-                  {/* Shows wind direction as a word instead of a number */}
-                  {/* I think this works, maybe I'll add southwest, northeast, etc */}
-                  {weatherData.wind.deg >= 135 && weatherData.wind.deg < 225 ? (
-                    <> South</>
-                  ) : weatherData.wind.deg >= 225 && weatherData.wind.deg < 315 ? (
-                    <> West</>
-                  ) : weatherData.wind.deg >= 315 && weatherData.wind.deg < 360 || weatherData.wind.deg >= 0 && weatherData.wind.deg < 45 ? (
-                    <> North</>
-                  ) : weatherData.wind.deg >= 45 && weatherData.wind.deg < 135 ? (
-                    <> East</>
-                  ) : (
-                    <> Error (wind direction not found)</>
-                  )} ({weatherData.wind.deg + '°'})
+                  {getWindDir()} ({weatherData.wind.deg + '°'})
                 </h2>
               </div>
               <div className='gridCard'>
