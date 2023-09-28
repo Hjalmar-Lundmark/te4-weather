@@ -71,28 +71,31 @@ function App() {
               </div>
               <div className='gridCard'>
                 <h3>Temperature:</h3>
-                <h2>{(weatherData.main.temp - 273.15).toFixed(2) + ' C°'}</h2>
+                <h2>{(weatherData.main.temp - 273.15).toFixed(1) + ' C°'}</h2>
               </div>
               <div className='gridCard'>
                 <h3>Feels like:</h3>
-                <h2>{(weatherData.main.feels_like - 273.15).toFixed(2) + ' C°'}</h2>
+                <h2>{(weatherData.main.feels_like - 273.15).toFixed(1) + ' C°'}</h2>
               </div>
               <div className='gridCard'>
                 <h3>Weather:</h3>
-                <h2>{weatherData.weather[0].description}</h2>
                 {weatherData.weather[0].icon ? (
-                  <img src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`} alt={weatherData.weather[0].description} />
+                  <img src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`} alt={weatherData.weather[0].description} width={100} height={100} />
                 ) : (
                   <></>
                 )}
+                <h3>{weatherData.weather[0].description}</h3>
               </div>
-              <div className='gridCard'>
-                <h3>Rain:</h3>
-                <h2>{weatherData.rain ? weatherData.rain["1h"] + ' mm/h' : 'No rain'}</h2>
-              </div>
+              {weatherData.rain ?
+                (
+                  <div className='gridCard'>
+                    <h3>Rainfall:</h3>
+                    <h2>{weatherData.rain["1h"]} mm/h</h2>
+                  </div>
+                ) : <></>}
               <div className='gridCard'>
                 <h3>Clouds:</h3>
-                <h2>Sky coverage: {weatherData.clouds.all + '%'}, height of {weatherData.cod} m</h2>
+                <h2>Sky coverage: {weatherData.clouds.all + '%'}</h2>
               </div>
               <div className='gridCard'>
                 <h3>Pressure:</h3>
