@@ -79,7 +79,6 @@ function ForecastPage() {
           </>
         ) : (
           <>
-            <h2>Darth Väder is looking into your future...</h2>
             <Spinner />
           </>
         )}

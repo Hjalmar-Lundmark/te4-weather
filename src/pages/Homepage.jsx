@@ -7,7 +7,6 @@ function Homepage() {
   const [long, setLong] = useState({})
   const [weatherData, setWeatherData] = useState([])
   var newLocation;
-  var quotes = ['Luke... I am your weather app', 'I find your lack of faith disturbing', 'May the weather be with you', 'It is your destiny. Join me, and together we can view the weather, as app and user.', 'The ability to destroy a planet is insignificant next to the power of viewing the weather.', 'Anakin WeatherIgnorer was weak. I destroyed him.']
 
   useEffect(() => {
     async function fetchWeather() {
@@ -181,7 +180,6 @@ function Homepage() {
         ) :
           (
             <>
-              <h2>{quotes[Math.floor(Math.random() * quotes.length)]}</h2>
               <Spinner />
             </>
           )
