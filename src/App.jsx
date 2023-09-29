@@ -126,6 +126,13 @@ function App() {
                     <h2>{weatherData.rain["1h"]} mm/h</h2>
                   </div>
                 ) : <></>}
+              {weatherData.snow ?
+                (
+                  <div className='gridCard'>
+                    <h3>Snowfall:</h3>
+                    <h2>{weatherData.snow["1h"]} mm/h</h2>
+                  </div>
+                ) : <></>}
               <div className='gridCard'>
                 <h3>Clouds:</h3>
                 <h2>Sky coverage: {weatherData.clouds.all + '%'}</h2>
