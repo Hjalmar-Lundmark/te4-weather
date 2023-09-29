@@ -36,6 +36,7 @@
   --color-bg: #222;
   --color-fg: red;
   --color-accent: rgb(255, 75, 75);
+  --color-light: white;
 }
 
 body {
@@ -108,7 +109,7 @@ main {
   padding: 1rem;
   border-radius: 15px;
   color: var(--color-bg);
-  border: solid 2px var(--color-fg);
+  border: solid 2px var(--color-light);
 }
 
 .gridCard>h3 {
@@ -120,10 +121,10 @@ main {
   display: flex;
   align-items: center;
   gap: 1rem;
-  border-top: 2px solid var(--color-fg);
-  border-bottom: 2px solid var(--color-fg);
+  border: 2px solid var(--color-light);
   color: var(--color-bg);
   background-color: var(--color-accent);
+  margin-bottom: 0.5rem;
 }
 
 .forecastCard>h2 {
