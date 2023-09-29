@@ -154,6 +154,15 @@ function App() {
                 <h3>Visibility:</h3>
                 <h2>{weatherData.visibility} meter</h2>
               </div>
+              <div className='gridCard'>
+                <h3>Sunrise:</h3>
+                <h2>{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</h2>
+                {/* idk how Copilot got *1000 but it seems to work */}
+              </div>
+              <div className='gridCard'>
+                <h3>Sunset:</h3>
+                <h2>{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</h2>
+              </div>
             </div>
             {lat && long ? (
               <>
