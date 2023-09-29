@@ -62,7 +62,6 @@ h2 {
 
 h3 {
   font-size: var(--step-1);
-  margin: 0;
 }
 
 p {
@@ -71,7 +70,6 @@ p {
 }
 
 main {
-  padding-top: var(--space-l);
   padding-bottom: var(--space-l);
   text-align: center;
 }
@@ -111,6 +109,10 @@ main {
   border-radius: 15px;
   color: var(--color-bg);
   border: solid 2px var(--color-fg);
+}
+
+.gridCard>h3 {
+  margin: 0;
 }
 
 @media only screen and (max-width: 768px) {
