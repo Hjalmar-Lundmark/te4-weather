@@ -58,7 +58,7 @@ function ForecastPage() {
   return (
     <>
       <section className='autoWidth'>
-        <h1>Darth Väders forecast</h1>
+        <h1>Darth Väders Forecast</h1>
         {forecastData.list ? (
           <>
             <h2>{forecastData.city.name}</h2>
