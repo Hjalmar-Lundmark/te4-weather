@@ -56,6 +56,16 @@ function ForecastPage() {
         <h1>Darth Väder</h1>
         {forecastData.list ? (
           <>
+            <h2>{forecastData.city.name}</h2>
+            {forecastData.list.map((item, index) => (
+              <div key={index} className='forecastCard'>
+                <h2>{item.dt_txt}</h2>
+                <p>Temperature: {Math.round(item.main.temp - 273.15)}°C</p>
+                <p>Feels like: {Math.round(item.main.feels_like - 273.15)}°C</p>
+                <p>Chance for rain/snow: {parseFloat(item.pop) * 100}%</p>
+                <p>Wind: {item.wind.speed} m/s</p>
+              </div>
+            ))}
 
           </>
         ) : (
