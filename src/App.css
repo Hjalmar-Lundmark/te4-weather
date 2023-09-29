@@ -120,4 +120,22 @@ main {
   iframe {
     display: none;
   }
+
+  .forecastCard {
+    flex-direction: column;
+  }
+
+  .forecastCard>p,
+  .forecastCard>h2 {
+    margin: 0;
+  }
+}
+
+.forecastCard {
+  display: flex;
+  align-items: center;
+  border-top: 2px solid var(--color-fg);
+  border-bottom: 2px solid var(--color-fg);
+  color: var(--color-bg);
+  background-color: var(--color-accent);
 }
