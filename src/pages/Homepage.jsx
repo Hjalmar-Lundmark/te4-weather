@@ -179,9 +179,7 @@ function Homepage() {
           </>
         ) :
           (
-            <>
-              <Spinner />
-            </>
+            <Spinner />
           )
         }
       </section>
