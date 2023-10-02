@@ -6,7 +6,7 @@ function Homepage() {
   const [lat, setLat] = useState({})
   const [long, setLong] = useState({})
   const [weatherData, setWeatherData] = useState([])
-  var newLocation;
+  const [newLocation, setNewLocation] = useState()
 
   useEffect(() => {
     async function fetchWeather() {
@@ -14,16 +14,16 @@ function Homepage() {
         if (parseFloat(localStorage.getItem('lat')) !== position.coords.latitude || parseFloat(localStorage.getItem('long')) !== position.coords.longitude) {
           setLat(position.coords.latitude)
           setLong(position.coords.longitude)
-          newLocation = true
+          setNewLocation(true)
+
+          localStorage.setItem('lat', position.coords.latitude)
+          localStorage.setItem('long', position.coords.longitude)
         } else {
           setLat(localStorage.getItem('lat'))
           setLong(localStorage.getItem('long'))
-          newLocation = false
+          setNewLocation(false)
         }
-
-        localStorage.setItem('lat', position.coords.latitude)
-        localStorage.setItem('long', position.coords.longitude)
-      });
+      })
 
       console.log(lat, long)
       if (typeof (lat) === 'object' || typeof (long) === 'object') {
@@ -33,10 +33,12 @@ function Homepage() {
       }
 
       // If the data is less than 10 minutes old, don't fetch new data
-      if (localStorage.getItem('fetchTime') && new Date().getTime() - localStorage.getItem('fetchTime') < 600000 && newLocation !== false) {
+      if (localStorage.getItem('fetchTime') && new Date().getTime() - localStorage.getItem('fetchTime') < 600000) {
         console.log('data is less than 10 minutes old')
-        setWeatherData(JSON.parse(localStorage.getItem('weatherData')))
-        return
+        if (!newLocation) {
+          setWeatherData(JSON.parse(localStorage.getItem('weatherData')))
+          return
+        }
       }
 
       await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${import.meta.env.VITE_API_KEY}`)
