@@ -105,11 +105,11 @@ function ForecastPage() {
                   <p>Cloud coverage: {item.clouds.all + '%'}</p>
                   {item.rain ?
                     (
-                      <p>Rainfall: {item.rain["3h"]} mm/3h</p>
+                      <p>Rainfall: {item.rain["3h"]} mm over 3h</p>
                     ) : <></>}
                   {item.snow ?
                     (
-                      <p>Snowfall: {item.snow["3h"]} mm/3h</p>
+                      <p>Snowfall: {item.snow["3h"]} mm over 3h</p>
                     ) : <></>}
                 </div>
               </div>
