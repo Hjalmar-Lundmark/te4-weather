@@ -116,11 +116,10 @@ main {
   margin: 0;
 }
 
-
 .forecastCard {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: space-around;
   border: 2px solid var(--color-light);
   color: var(--color-bg);
   background-color: var(--color-accent);
@@ -129,6 +128,12 @@ main {
 
 .forecastCard>h2 {
   width: 30%;
+}
+
+.pop {
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  cursor: context-menu;
 }
 
 @media only screen and (max-width: 768px) {

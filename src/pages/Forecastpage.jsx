@@ -65,9 +65,9 @@ function ForecastPage() {
             {forecastData.list.map((item, index) => (
               <div key={index} className='forecastCard'>
                 <h2>{new Date(item.dt * 1000).toDateString() + ' ' + new Date(item.dt * 1000).getHours()}.00</h2>
-                <p>Temperature: {Math.round(item.main.temp - 273.15)}°C</p>
-                <p>Chance for rain: {(parseFloat(item.pop) * 100).toFixed(0)}%</p>
-                <p>Wind: {item.wind.speed} m/s</p>
+                <p>Temperature: <br />{Math.round(item.main.temp - 273.15)}°C</p>
+                <p className='pop' title='Pop stands for "Probability of precipitation", meaning chance for rain or snow'>Pop: <br />{(parseFloat(item.pop) * 100).toFixed(0)}%</p>
+                <p>Wind: <br />{item.wind.speed} m/s</p>
                 {item.weather[0].icon ? (
                   <img src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`} alt={item.weather[0].description} width={80} height={80} />
                 ) : (
