@@ -58,10 +58,24 @@ function ForecastPage() {
   function open(index) {
     if (document.getElementById('test' + index).style.display === 'none') {
       // open
-      document.getElementById('test' + index).style.display = 'block'
+      document.getElementById('test' + index).style.display = 'flex'
     } else {
       // close
       document.getElementById('test' + index).style.display = 'none'
+    }
+  }
+
+  function getWindDir(item) {
+    if (item.wind.deg >= 135 && item.wind.deg < 225) {
+      return 'South'
+    } else if (item.wind.deg >= 225 && item.wind.deg < 315) {
+      return 'West'
+    } else if (item.wind.deg >= 315 && item.wind.deg < 360 || item.wind.deg >= 0 && item.wind.deg < 45) {
+      return 'North'
+    } else if (item.wind.deg >= 45 && item.wind.deg < 135) {
+      return 'East'
+    } else {
+      return 'Error (wind direction not found)'
     }
   }
 
@@ -85,8 +99,18 @@ function ForecastPage() {
                     <></>
                   )}
                 </div>
-                <div className='forecastCardLower' id={'test' + index} style={{ display: 'none' }}>
-                  <p>{item.wind.dir}</p>
+                <div className='forecastCardInner' id={'test' + index} style={{ display: 'none' }}>
+                  <p>Wind from {getWindDir(item)}</p>
+                  <p>Feels like {(item.main.feels_like - 273.15).toFixed(1) + ' °C'}</p>
+                  <p>Cloud coverage: {item.clouds.all + '%'}</p>
+                  {item.rain ?
+                    (
+                      <p>Rainfall: {item.rain["3h"]} mm/3h</p>
+                    ) : <></>}
+                  {item.snow ?
+                    (
+                      <p>Snowfall: {item.snow["3h"]} mm/3h</p>
+                    ) : <></>}
                 </div>
               </div>
             ))}
@@ -97,7 +121,7 @@ function ForecastPage() {
             <Spinner />
           </>
         )}
-      </section>
+      </section >
     </>
   )
 }

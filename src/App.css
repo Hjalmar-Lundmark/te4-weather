@@ -121,10 +121,12 @@ main {
   color: var(--color-bg);
   background-color: var(--color-accent);
   margin-bottom: 0.5rem;
+  cursor: pointer;
 }
 
 .forecastCardInner {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-around;
 }

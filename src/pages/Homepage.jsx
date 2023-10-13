@@ -104,11 +104,11 @@ function Homepage() {
               </div>
               <div className='gridCard'>
                 <h3>Temperature:</h3>
-                <h2>{(weatherData.main.temp - 273.15).toFixed(1) + ' C°'}</h2>
+                <h2>{(weatherData.main.temp - 273.15).toFixed(1) + ' °C'}</h2>
               </div>
               <div className='gridCard'>
                 <h3>Feels like:</h3>
-                <h2>{(weatherData.main.feels_like - 273.15).toFixed(1) + ' C°'}</h2>
+                <h2>{(weatherData.main.feels_like - 273.15).toFixed(1) + ' °C'}</h2>
               </div>
               <div className='gridCard'>
                 <h3>Weather:</h3>
