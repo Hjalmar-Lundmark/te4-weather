@@ -55,6 +55,30 @@ function ForecastPage() {
     fetchWeather()
   }, [lat, long])
 
+  function open(index) {
+    if (document.getElementById('test' + index).style.display === 'none') {
+      // open
+      document.getElementById('test' + index).style.display = 'flex'
+    } else {
+      // close
+      document.getElementById('test' + index).style.display = 'none'
+    }
+  }
+
+  function getWindDir(item) {
+    if (item.wind.deg >= 135 && item.wind.deg < 225) {
+      return 'South'
+    } else if (item.wind.deg >= 225 && item.wind.deg < 315) {
+      return 'West'
+    } else if (item.wind.deg >= 315 && item.wind.deg < 360 || item.wind.deg >= 0 && item.wind.deg < 45) {
+      return 'North'
+    } else if (item.wind.deg >= 45 && item.wind.deg < 135) {
+      return 'East'
+    } else {
+      return 'Error (wind direction not found)'
+    }
+  }
+
   return (
     <>
       <section className='autoWidth'>
@@ -63,16 +87,31 @@ function ForecastPage() {
           <>
             <h2>{forecastData.city.name}</h2>
             {forecastData.list.map((item, index) => (
-              <div key={index} className='forecastCard'>
-                <h2>{new Date(item.dt * 1000).toDateString() + ' ' + new Date(item.dt * 1000).getHours()}.00</h2>
-                <p>Temperature: <br />{Math.round(item.main.temp - 273.15)}°C</p>
-                <p className='pop' title='Pop stands for "Probability of precipitation", meaning chance for rain or snow'>Pop: <br />{(parseFloat(item.pop) * 100).toFixed(0)}%</p>
-                <p>Wind: <br />{item.wind.speed} m/s</p>
-                {item.weather[0].icon ? (
-                  <img src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`} alt={item.weather[0].description} width={80} height={80} />
-                ) : (
-                  <></>
-                )}
+              <div onClick={() => (open(index))} key={index} className='forecastCard'>
+                <div className='forecastCardInner'>
+                  <h2>{new Date(item.dt * 1000).toDateString() + ' ' + new Date(item.dt * 1000).getHours()}.00</h2>
+                  <p>Temperature: <br />{(item.main.temp - 273.15).toFixed(1)}°C</p>
+                  <p className='pop' title='Pop stands for "Probability of precipitation", meaning chance for rain or snow'>Pop: <br />{(parseFloat(item.pop) * 100).toFixed(0)}%</p>
+                  <p>Wind: <br />{item.wind.speed} m/s</p>
+                  {item.weather[0].icon ? (
+                    <img src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`} alt={item.weather[0].description} width={80} height={80} />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className='forecastCardInner' id={'test' + index} style={{ display: 'none' }}>
+                  <p>Wind from {getWindDir(item)}</p>
+                  <p>Feels like {(item.main.feels_like - 273.15).toFixed(1) + ' °C'}</p>
+                  <p>Cloud coverage: {item.clouds.all + '%'}</p>
+                  {item.rain ?
+                    (
+                      <p>Rainfall: {item.rain["3h"]} mm over 3h</p>
+                    ) : <></>}
+                  {item.snow ?
+                    (
+                      <p>Snowfall: {item.snow["3h"]} mm over 3h</p>
+                    ) : <></>}
+                </div>
               </div>
             ))}
 
@@ -82,7 +121,7 @@ function ForecastPage() {
             <Spinner />
           </>
         )}
-      </section>
+      </section >
     </>
   )
 }

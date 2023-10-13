@@ -117,16 +117,21 @@ main {
 }
 
 .forecastCard {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
   border: 2px solid var(--color-light);
   color: var(--color-bg);
   background-color: var(--color-accent);
   margin-bottom: 0.5rem;
+  cursor: pointer;
 }
 
-.forecastCard>h2 {
+.forecastCardInner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.forecastCardInner>h2 {
   width: 30%;
 }
 
