@@ -147,14 +147,14 @@ main {
     display: none;
   }
 
-  .forecastCard {
+  .forecastCardInner {
     flex-direction: column;
     gap: 1px;
   }
 
-  .forecastCard>p,
-  .forecastCard>h2 {
-    margin: 0;
-    width: 100%;
+  .forecastCardInner>p,
+  .forecastCardInner>h2 {
+    margin: 2px;
+    width: 80%;
   }
 }
