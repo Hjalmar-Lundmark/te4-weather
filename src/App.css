@@ -135,10 +135,20 @@ main {
   width: 30%;
 }
 
+.forecastCardLower {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-placement, auto-fill), minmax(var(--grid-min-item-size, 16rem), 1fr));
+  /* grid-template-columns: repeat(3, 1fr); */
+}
+
 .pop {
   text-decoration: underline;
   text-decoration-style: dashed;
   cursor: context-menu;
+}
+
+.expl {
+  display: none;
 }
 
 @media only screen and (max-width: 768px) {
@@ -156,5 +166,13 @@ main {
   .forecastCardInner>h2 {
     margin: 2px;
     width: 80%;
+  }
+
+  .forecastCardLower>p {
+    margin: 2px;
+  }
+
+  .expl {
+    display: block;
   }
 }

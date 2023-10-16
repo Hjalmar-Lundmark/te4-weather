@@ -58,7 +58,7 @@ function ForecastPage() {
   function open(index) {
     if (document.getElementById('test' + index).style.display === 'none') {
       // open
-      document.getElementById('test' + index).style.display = 'flex'
+      document.getElementById('test' + index).style.display = 'grid'
     } else {
       // close
       document.getElementById('test' + index).style.display = 'none'
@@ -86,6 +86,7 @@ function ForecastPage() {
         {forecastData.list ? (
           <>
             <h2>{forecastData.city.name}</h2>
+            <p className='expl'>* Pop stands for &quot;Probability of precipitation&quot;, meaning chance for rain or snow</p>
             {forecastData.list.map((item, index) => (
               <div onClick={() => (open(index))} key={index} className='forecastCard'>
                 <div className='forecastCardInner'>
@@ -99,8 +100,10 @@ function ForecastPage() {
                     <></>
                   )}
                 </div>
-                <div className='forecastCardInner' id={'test' + index} style={{ display: 'none' }}>
+
+                <div className='forecastCardLower' data-rows='masonry' id={'test' + index} style={{ display: 'none' }}>
                   <p>Wind from {getWindDir(item)}</p>
+                  <p>Gusts up to {item.wind.gust} m/s</p>
                   <p>Feels like {(item.main.feels_like - 273.15).toFixed(1) + ' °C'}</p>
                   <p>Cloud coverage: {item.clouds.all + '%'}</p>
                   {item.rain ?

@@ -57,34 +57,34 @@ function Homepage() {
   }, [lat, long])
 
   // I used these for wind names and speeds: https://www.weather.gov/mfl/beaufort https://www.smhi.se/kunskapsbanken/meteorologi/vind/skalor-for-vindhastighet-1.252     
-  function getWind() {
-    if (weatherData.wind.speed <= 0.2) {
+  function getWind(item) {
+    if (item.wind.speed <= 0.2) {
       return 'Calm'
-    } else if (weatherData.wind.speed > 0.2 && weatherData.wind.speed <= 3.3) {
+    } else if (item.wind.speed > 0.2 && item.wind.speed <= 3.3) {
       return 'Light Breeze'
-    } else if (weatherData.wind.speed > 3.3 && weatherData.wind.speed <= 7.9) {
+    } else if (item.wind.speed > 3.3 && item.wind.speed <= 7.9) {
       return 'Moderate Breeze'
-    } else if (weatherData.wind.speed > 7.9 && weatherData.wind.speed <= 13.8) {
+    } else if (item.wind.speed > 7.9 && item.wind.speed <= 13.8) {
       return 'Strong Breeze'
-    } else if (weatherData.wind.speed > 13.8 && weatherData.wind.speed <= 24.4) {
+    } else if (item.wind.speed > 13.8 && item.wind.speed <= 24.4) {
       return 'Severe gale'
-    } else if (weatherData.wind.speed > 24.4 && weatherData.wind.speed <= 32.6) {
+    } else if (item.wind.speed > 24.4 && item.wind.speed <= 32.6) {
       return 'Storm'
-    } else if (weatherData.wind.speed > 32.6) {
+    } else if (item.wind.speed > 32.6) {
       return 'Hurricane'
     } else {
       return 'Error (wind speed not found)'
     }
   }
 
-  function getWindDir() {
-    if (weatherData.wind.deg >= 135 && weatherData.wind.deg < 225) {
+  function getWindDir(item) {
+    if (item.wind.deg >= 135 && item.wind.deg < 225) {
       return 'South'
-    } else if (weatherData.wind.deg >= 225 && weatherData.wind.deg < 315) {
+    } else if (item.wind.deg >= 225 && item.wind.deg < 315) {
       return 'West'
-    } else if (weatherData.wind.deg >= 315 && weatherData.wind.deg < 360 || weatherData.wind.deg >= 0 && weatherData.wind.deg < 45) {
+    } else if (item.wind.deg >= 315 && item.wind.deg < 360 || item.wind.deg >= 0 && item.wind.deg < 45) {
       return 'North'
-    } else if (weatherData.wind.deg >= 45 && weatherData.wind.deg < 135) {
+    } else if (item.wind.deg >= 45 && item.wind.deg < 135) {
       return 'East'
     } else {
       return 'Error (wind direction not found)'
@@ -144,13 +144,13 @@ function Homepage() {
               <div className='gridCard'>
                 <h3>Wind:</h3>
                 <h2>
-                  {getWind()} ({weatherData.wind.speed + ' m/s'})
+                  {getWind(weatherData)} ({weatherData.wind.speed + ' m/s'})
                 </h2>
               </div>
               <div className='gridCard'>
                 <h3>Wind direction:</h3>
                 <h2>
-                  {getWindDir()} ({weatherData.wind.deg + '°'})
+                  {getWindDir(weatherData)} ({weatherData.wind.deg + '°'})
                 </h2>
               </div>
               <div className='gridCard'>
