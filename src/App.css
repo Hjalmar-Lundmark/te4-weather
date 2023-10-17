@@ -124,6 +124,12 @@ main {
   cursor: pointer;
 }
 
+/* n stands for night */
+.n {
+  background-color: var(--color-bg);
+  color: var(--color-accent);
+}
+
 .forecastCardInner {
   display: flex;
   flex-direction: row;

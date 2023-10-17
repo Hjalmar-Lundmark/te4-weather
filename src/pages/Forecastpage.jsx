@@ -88,7 +88,7 @@ function ForecastPage() {
             <h2>{forecastData.city.name}</h2>
             <p className='expl'>* Pop stands for &quot;Probability of precipitation&quot;, meaning chance for rain or snow</p>
             {forecastData.list.map((item, index) => (
-              <div onClick={() => (open(index))} key={index} className='forecastCard'>
+              <div onClick={() => (open(index))} key={index} className={`forecastCard ${item.sys.pod}`}>
                 <div className='forecastCardInner'>
                   <h2>{new Date(item.dt * 1000).toDateString() + ' ' + new Date(item.dt * 1000).getHours()}.00</h2>
                   <p>Temperature: <br />{(item.main.temp - 273.15).toFixed(1)}°C</p>
