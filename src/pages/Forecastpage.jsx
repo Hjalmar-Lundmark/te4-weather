@@ -93,7 +93,7 @@ function ForecastPage() {
                   <h2>{new Date(item.dt * 1000).toDateString() + ' ' + new Date(item.dt * 1000).getHours()}.00</h2>
                   <p>Temperature: <br />{(item.main.temp - 273.15).toFixed(1)}°C</p>
                   <p className='pop' title='Pop stands for "Probability of precipitation", meaning chance for rain or snow'>Pop: <br />{(parseFloat(item.pop) * 100).toFixed(0)}%</p>
-                  <p>Wind: <br />{item.wind.speed} m/s</p>
+                  <p>Wind: <br />{(item.wind.speed).toFixed(1)} m/s</p>
                   {item.weather[0].icon ? (
                     <img src={`http://openweathermap.org/img/w/${item.weather[0].icon}.png`} alt={item.weather[0].description} width={80} height={80} />
                   ) : (
@@ -103,7 +103,7 @@ function ForecastPage() {
 
                 <div className='forecastCardLower' data-rows='masonry' id={'test' + index} style={{ display: 'none' }}>
                   <p>Wind from {getWindDir(item)}</p>
-                  <p>Gusts up to {item.wind.gust} m/s</p>
+                  <p>Gusts up to {(item.wind.gust).toFixed(1)} m/s</p>
                   <p>Feels like {(item.main.feels_like - 273.15).toFixed(1) + ' °C'}</p>
                   <p>Cloud coverage: {item.clouds.all + '%'}</p>
                   {item.rain ?
