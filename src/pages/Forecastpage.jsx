@@ -70,7 +70,7 @@ function ForecastPage() {
       return 'South'
     } else if (item.wind.deg >= 225 && item.wind.deg < 315) {
       return 'West'
-    } else if (item.wind.deg >= 315 && item.wind.deg < 360 || item.wind.deg >= 0 && item.wind.deg < 45) {
+    } else if (item.wind.deg >= 315 && item.wind.deg <= 360 || item.wind.deg >= 0 && item.wind.deg < 45) {
       return 'North'
     } else if (item.wind.deg >= 45 && item.wind.deg < 135) {
       return 'East'
