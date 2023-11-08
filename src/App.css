@@ -150,7 +150,7 @@ main {
 .pop {
   text-decoration: underline;
   text-decoration-style: dashed;
-  cursor: context-menu;
+  cursor: help;
 }
 
 .expl {
