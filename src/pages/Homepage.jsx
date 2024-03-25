@@ -7,6 +7,7 @@ function Homepage() {
   const [long, setLong] = useState({})
   const [weatherData, setWeatherData] = useState([])
   const [newLocation, setNewLocation] = useState()
+  const [dropdownContent, setDropdownContent] = useState([])
 
   useEffect(() => {
     async function fetchWeather() {
@@ -91,15 +92,24 @@ function Homepage() {
     }
   }
 
-  function getLocations() {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${document.querySelector('input').value}&limit=5&appid=${import.meta.env.VITE_API_KEY}`)
+  function getPlaces() {
+    // fetch(`https://api.openweathermap.org/data/2.5/weather?q=${document.querySelector('input').value}&limit=5&appid=${import.meta.env.VITE_API_KEY}`)
+    //   .then(res => res.json())
+    //   .then(result => {
+    //     console.log(result)
+    //     if (result.cod === '404') {
+    //       return
+    //     }
+    //     setWeatherData(result);
+    //   }).catch(err => {
+    //     console.log(err)
+    //   });
+
+    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${document.querySelector('input').value}&limit=5&appid=${import.meta.env.VITE_API_KEY}`)
       .then(res => res.json())
       .then(result => {
         console.log(result)
-        if (result.cod === '404') {
-          return
-        }
-        setWeatherData(result);
+        setDropdownContent(result);
       }).catch(err => {
         console.log(err)
       });
@@ -109,8 +119,16 @@ function Homepage() {
     <>
       <section className='autoWidth'>
         <h1>Darth Väder</h1>
-        <input type="text" placeholder='Search' />
-        <button onClick={() => { getLocations() }} >Update</button>
+        <input type="text" placeholder='Search' onInput={() => { getPlaces() }} />
+        {/* <button onClick={() => { getPlaces() }}>Update</button> */}
+        {dropdownContent ? (
+          <ul>
+            {dropdownContent.map((item, index) => (
+              <li key={index} onClick={() => { setLat(item.lat); setLong(item.lon) }}>{item.name}</li>
+            ))}
+          </ul>
+        ) : (<></>)
+        }
         {weatherData.main ? (
           <>
             <div className='grid' data-rows='masonry'>
