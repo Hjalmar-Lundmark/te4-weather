@@ -67,17 +67,35 @@ function ForecastPage() {
   }
 
   function getWindDir(item) {
-    if (item.wind.deg >= 135 && item.wind.deg < 225) {
-      return 'South'
-    } else if (item.wind.deg >= 225 && item.wind.deg < 315) {
-      return 'West'
-    } else if (item.wind.deg >= 315 && item.wind.deg <= 360 || item.wind.deg >= 0 && item.wind.deg < 45) {
-      return 'North'
-    } else if (item.wind.deg >= 45 && item.wind.deg < 135) {
+    if (item.wind.deg >= 22.5 && item.wind.deg < 67.5) {
+      return 'Northeast'
+    } else if (item.wind.deg >= 67.5 && item.wind.deg < 112.5) {
       return 'East'
+    } else if (item.wind.deg >= 112.5 && item.wind.deg < 157.5) {
+      return 'Southeast'
+    } else if (item.wind.deg >= 157.5 && item.wind.deg < 202.5) {
+      return 'South'
+    } else if (item.wind.deg >= 202.5 && item.wind.deg < 247.5) {
+      return 'Southwest'
+    } else if (item.wind.deg >= 247.5 && item.wind.deg < 292.5) {
+      return 'West'
+    } else if (item.wind.deg >= 292.5 && item.wind.deg < 337.5) {
+      return 'Northwest'
     } else {
-      return 'Error (wind direction not found)'
+      return 'North'
     }
+
+    // if (item.wind.deg >= 135 && item.wind.deg < 225) {
+    //   return 'South'
+    // } else if (item.wind.deg >= 225 && item.wind.deg < 315) {
+    //   return 'West'
+    // } else if (item.wind.deg >= 315 && item.wind.deg <= 360 || item.wind.deg >= 0 && item.wind.deg < 45) {
+    //   return 'North'
+    // } else if (item.wind.deg >= 45 && item.wind.deg < 135) {
+    //   return 'East'
+    // } else {
+    //   return 'Error (wind direction not found)'
+    // }
   }
 
   function getPlace() {
@@ -101,7 +119,7 @@ function ForecastPage() {
   return (
     <>
       <section className='autoWidth'>
-        <h1>Darth Väders Forecast</h1>
+        <h1>Darth Väder&apos;s Forecast</h1>
         <Search getPlace={getPlace} />
         {forecastData.list ? (
           <>
