@@ -31,16 +31,13 @@ function Homepage() {
         }
       })
 
-      console.log(lat, long)
       if (typeof (lat) === 'object' || typeof (long) === 'object') {
-        console.log('lat or long is 0')
         setWeatherData([])
         return
       }
 
       // If the data is less than 10 minutes old, don't fetch new data
       if (localStorage.getItem('fetchTime') && new Date().getTime() - localStorage.getItem('fetchTime') < 600000) {
-        console.log('data is less than 10 minutes old')
         if (!newLocation) {
           setWeatherData(JSON.parse(localStorage.getItem('weatherData')))
           return
@@ -50,7 +47,6 @@ function Homepage() {
       await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${import.meta.env.VITE_API_KEY}`)
         .then(res => res.json())
         .then(result => {
-          console.log(result)
           setWeatherData(result);
           localStorage.setItem('weatherData', JSON.stringify(result));
           localStorage.setItem('fetchTime', new Date().getTime());
@@ -106,7 +102,6 @@ function Homepage() {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${document.getElementById('search').value}&appid=${import.meta.env.VITE_API_KEY}`)
       .then(res => res.json())
       .then(result => {
-        console.log(result)
         if (result.cod === '404') {
           return
         }

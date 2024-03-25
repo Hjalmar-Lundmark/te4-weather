@@ -31,16 +31,13 @@ function ForecastPage() {
         localStorage.setItem('long', position.coords.longitude)
       });
 
-      console.log(lat, long)
       if (typeof (lat) === 'object' || typeof (long) === 'object') {
-        console.log('lat or long is 0')
         setForecastData([])
         return
       }
 
       // If the data is less than 10 minutes old, don't fetch new data
       if (localStorage.getItem('forecastTime') && new Date().getTime() - localStorage.getItem('forecastTime') < 600000 && newLocation !== false) {
-        console.log('data is less than 10 minutes old')
         setForecastData(JSON.parse(localStorage.getItem('forecastData')))
         return
       }
@@ -49,7 +46,6 @@ function ForecastPage() {
       await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${import.meta.env.VITE_API_KEY}`)
         .then(res => res.json())
         .then(result => {
-          console.log(result)
           setForecastData(result);
           localStorage.setItem('forecastData', JSON.stringify(result));
           localStorage.setItem('forecastTime', new Date().getTime());
@@ -112,7 +108,6 @@ function ForecastPage() {
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${document.getElementById('search').value}&appid=${import.meta.env.VITE_API_KEY}`)
       .then(res => res.json())
       .then(result => {
-        console.log(result)
         if (result.cod === '404') {
           return
         }
