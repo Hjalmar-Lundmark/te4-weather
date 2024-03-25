@@ -91,7 +91,7 @@ function Homepage() {
     }
   }
 
-  function getLocations() {
+  function getPlace() {
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${document.querySelector('input').value}&limit=5&appid=${import.meta.env.VITE_API_KEY}`)
       .then(res => res.json())
       .then(result => {
@@ -110,7 +110,7 @@ function Homepage() {
       <section className='autoWidth'>
         <h1>Darth Väder</h1>
         <input type="text" placeholder='Search' />
-        <button onClick={() => { getLocations() }} >Update</button>
+        <button onClick={() => { getPlace() }} >Update</button>
         {weatherData.main ? (
           <>
             <div className='grid' data-rows='masonry'>
