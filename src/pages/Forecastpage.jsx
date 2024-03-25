@@ -122,7 +122,7 @@ function ForecastPage() {
                 </div>
 
                 <div className='forecastCardLower' data-rows='masonry' id={'test' + index} style={{ display: 'none' }}>
-                  <p>Wind from {getWindDir(item)}</p>
+                  <p>Wind from {getWindDir(item)} ({item.wind.deg}°)</p>
                   <p>Gusts up to {(item.wind.gust).toFixed(1)} m/s</p>
                   <p>Feels like {(item.main.feels_like - 273.15).toFixed(1) + ' °C'}</p>
                   <p>Cloud coverage: {item.clouds.all + '%'}</p>

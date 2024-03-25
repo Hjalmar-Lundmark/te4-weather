@@ -154,14 +154,6 @@ function Homepage() {
                   </div>
                 ) : <></>}
               <div className='gridCard'>
-                <h3>Clouds:</h3>
-                <h2>Sky coverage: {weatherData.clouds.all + '%'}</h2>
-              </div>
-              <div className='gridCard'>
-                <h3>Pressure:</h3>
-                <h2>{weatherData.main.pressure} hPa</h2>
-              </div>
-              <div className='gridCard'>
                 <h3>Wind:</h3>
                 <h2>
                   {getWind(weatherData)} ({weatherData.wind.speed + ' m/s'})
@@ -172,6 +164,14 @@ function Homepage() {
                 <h2>
                   {getWindDir(weatherData)} ({weatherData.wind.deg + '°'})
                 </h2>
+              </div>
+              <div className='gridCard'>
+                <h3>Clouds:</h3>
+                <h2>Sky coverage: {weatherData.clouds.all + '%'}</h2>
+              </div>
+              <div className='gridCard'>
+                <h3>Pressure:</h3>
+                <h2>{weatherData.main.pressure} hPa</h2>
               </div>
               <div className='gridCard'>
                 <h3>Humidity:</h3>
