@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import '../App.css'
 import Spinner from '../components/Spinner'
+import Search from '../components/Search'
 
 function ForecastPage() {
   const [lat, setLat] = useState({})
@@ -83,6 +84,7 @@ function ForecastPage() {
     <>
       <section className='autoWidth'>
         <h1>Darth Väders Forecast</h1>
+        <Search />
         {forecastData.list ? (
           <>
             <h2>{forecastData.city.name}</h2>

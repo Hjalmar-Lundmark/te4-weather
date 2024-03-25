@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import '../App.css'
 import Spinner from '../components/Spinner'
+import Search from '../components/Search'
 
 function Homepage() {
   const [lat, setLat] = useState({})
@@ -113,8 +114,7 @@ function Homepage() {
     <>
       <section className='autoWidth'>
         <h1>Darth Väder</h1>
-        <input type="text" placeholder='Search' />
-        <button onClick={() => { getPlace() }} >Update</button>
+        <Search getPlace={getPlace} />
         {weatherData.main ? (
           <>
             <div className='grid' data-rows='masonry'>
