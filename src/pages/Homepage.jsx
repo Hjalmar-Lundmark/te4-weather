@@ -60,7 +60,7 @@ function Homepage() {
     }
 
     fetchWeather()
-  }, [lat, long])
+  }, [lat, long, search])
 
   // I used these for wind names and speeds: https://www.weather.gov/mfl/beaufort https://www.smhi.se/kunskapsbanken/meteorologi/vind/skalor-for-vindhastighet-1.252     
   function getWind(item) {
@@ -122,7 +122,7 @@ function Homepage() {
     <>
       <section className='autoWidth'>
         <h1>Darth Väder</h1>
-        <Search getPlace={getPlace} />
+        <Search getPlace={getPlace} search={search} setSearch={setSearch} />
         {weatherData.main ? (
           <>
             <div className='grid' data-rows='masonry'>
