@@ -8,9 +8,14 @@ function Homepage() {
   const [long, setLong] = useState({})
   const [weatherData, setWeatherData] = useState([])
   const [newLocation, setNewLocation] = useState()
+  const [search, setSearch] = useState(false)
 
   useEffect(() => {
     async function fetchWeather() {
+      if (search) {
+        return
+      }
+
       navigator.geolocation.getCurrentPosition(function (position) {
         if (parseFloat(localStorage.getItem('lat')) !== position.coords.latitude || parseFloat(localStorage.getItem('long')) !== position.coords.longitude) {
           setLat(position.coords.latitude)
@@ -96,6 +101,7 @@ function Homepage() {
     if (document.getElementById('search').value === '' || document.getElementById('search').value.toLowerCase() == weatherData.name.toLowerCase()) {
       return
     }
+    setSearch(true)
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${document.getElementById('search').value}&appid=${import.meta.env.VITE_API_KEY}`)
       .then(res => res.json())
@@ -105,6 +111,8 @@ function Homepage() {
           return
         }
         setWeatherData(result);
+        setLat(result.coord.lat)
+        setLong(result.coord.lon)
       }).catch(err => {
         console.log(err)
       });
@@ -183,12 +191,12 @@ function Homepage() {
               </div>
               <div className='gridCard'>
                 <h3>Sunrise:</h3>
-                <h2>{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</h2>
+                <h2>{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString("en-GB")}</h2>
                 {/* idk how Copilot got *1000 but it seems to work */}
               </div>
               <div className='gridCard'>
                 <h3>Sunset:</h3>
-                <h2>{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</h2>
+                <h2>{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString("en-GB")}</h2>
               </div>
             </div>
             {lat && long ? (
