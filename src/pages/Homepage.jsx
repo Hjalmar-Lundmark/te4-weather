@@ -123,9 +123,9 @@ function Homepage() {
     <>
       <section className='autoWidth'>
         <h1>Darth Väder</h1>
-        <Search getPlace={getPlace} search={search} setSearch={setSearch} />
         {weatherData.main ? (
           <>
+            <Search getPlace={getPlace} search={search} setSearch={setSearch} />
             <div className='grid' data-rows='masonry'>
               <div className='gridCard'>
                 <h3>City:</h3>
