@@ -100,10 +100,12 @@ function ForecastPage() {
   }
 
   function getPlace() {
-    if (document.getElementById('search').value === '' || document.getElementById('search').value.toLowerCase() == forecastData.city.name.toLowerCase()) {
+    setSearch(true)
+
+    const test = forecastData.city.name || 'test'
+    if (document.getElementById('search').value === '' || document.getElementById('search').value.toLowerCase() == test.toLowerCase()) {
       return
     }
-    setSearch(true)
 
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${document.getElementById('search').value}&appid=${import.meta.env.VITE_API_KEY}`)
       .then(res => res.json())
@@ -121,9 +123,9 @@ function ForecastPage() {
     <>
       <section className='autoWidth'>
         <h1>Darth Väder&apos;s Forecast</h1>
+        <Search getPlace={getPlace} search={search} setSearch={setSearch} />
         {forecastData.list ? (
           <>
-            <Search getPlace={getPlace} search={search} setSearch={setSearch} />
             <h2>{forecastData.city.name}</h2>
             <p className='expl'>* Pop stands for &quot;Probability of precipitation&quot;, meaning chance for rain or snow</p>
             {forecastData.list.map((item, index) => (

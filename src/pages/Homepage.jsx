@@ -100,10 +100,12 @@ function Homepage() {
   }
 
   function getPlace() {
-    if (document.getElementById('search').value === '' || document.getElementById('search').value.toLowerCase() == weatherData.name.toLowerCase()) {
+    setSearch(true)
+
+    const test = weatherData.name || 'test'
+    if (document.getElementById('search').value === '' || document.getElementById('search').value.toLowerCase() == test.toLowerCase()) {
       return
     }
-    setSearch(true)
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${document.getElementById('search').value}&appid=${import.meta.env.VITE_API_KEY}`)
       .then(res => res.json())
@@ -123,9 +125,9 @@ function Homepage() {
     <>
       <section className='autoWidth'>
         <h1>Darth Väder</h1>
+        <Search getPlace={getPlace} search={search} setSearch={setSearch} />
         {weatherData.main ? (
           <>
-            <Search getPlace={getPlace} search={search} setSearch={setSearch} />
             <div className='grid' data-rows='masonry'>
               <div className='gridCard'>
                 <h3>City:</h3>
