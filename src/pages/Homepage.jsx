@@ -93,11 +93,11 @@ function Homepage() {
   }
 
   function getPlace() {
-    if (document.querySelector('input').value === '' || document.querySelector('input').value.toLowerCase() == weatherData.name.toLowerCase()) {
+    if (document.getElementById('search').value === '' || document.getElementById('search').value.toLowerCase() == weatherData.name.toLowerCase()) {
       return
     }
 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${document.querySelector('input').value}&limit=5&appid=${import.meta.env.VITE_API_KEY}`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${document.getElementById('search').value}&appid=${import.meta.env.VITE_API_KEY}`)
       .then(res => res.json())
       .then(result => {
         console.log(result)
