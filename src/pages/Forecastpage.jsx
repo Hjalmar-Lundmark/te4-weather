@@ -8,9 +8,14 @@ function ForecastPage() {
   const [long, setLong] = useState({})
   const [forecastData, setForecastData] = useState([])
   var newLocation;
+  const [search, setSearch] = useState(false)
 
   useEffect(() => {
     async function fetchWeather() {
+      if (search) {
+        return
+      }
+
       navigator.geolocation.getCurrentPosition(function (position) {
         if (parseFloat(localStorage.getItem('lat')) !== position.coords.latitude || parseFloat(localStorage.getItem('long')) !== position.coords.longitude) {
           setLat(position.coords.latitude)
@@ -54,7 +59,7 @@ function ForecastPage() {
     }
 
     fetchWeather()
-  }, [lat, long])
+  }, [lat, long, search])
 
   function open(index) {
     if (document.getElementById('test' + index).style.display === 'none') {
@@ -102,6 +107,7 @@ function ForecastPage() {
     if (document.getElementById('search').value === '' || document.getElementById('search').value.toLowerCase() == forecastData.city.name.toLowerCase()) {
       return
     }
+    setSearch(true)
 
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${document.getElementById('search').value}&appid=${import.meta.env.VITE_API_KEY}`)
       .then(res => res.json())
@@ -120,7 +126,7 @@ function ForecastPage() {
     <>
       <section className='autoWidth'>
         <h1>Darth Väder&apos;s Forecast</h1>
-        <Search getPlace={getPlace} />
+        <Search getPlace={getPlace} search={search} setSearch={setSearch} />
         {forecastData.list ? (
           <>
             <h2>{forecastData.city.name}</h2>
