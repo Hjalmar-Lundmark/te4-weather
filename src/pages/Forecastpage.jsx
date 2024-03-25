@@ -80,11 +80,29 @@ function ForecastPage() {
     }
   }
 
+  function getPlace() {
+    if (document.getElementById('search').value === '' || document.getElementById('search').value.toLowerCase() == forecastData.city.name.toLowerCase()) {
+      return
+    }
+
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${document.getElementById('search').value}&appid=${import.meta.env.VITE_API_KEY}`)
+      .then(res => res.json())
+      .then(result => {
+        console.log(result)
+        if (result.cod === '404') {
+          return
+        }
+        setForecastData(result);
+      }).catch(err => {
+        console.log(err)
+      });
+  }
+
   return (
     <>
       <section className='autoWidth'>
         <h1>Darth Väders Forecast</h1>
-        <Search />
+        <Search getPlace={getPlace} />
         {forecastData.list ? (
           <>
             <h2>{forecastData.city.name}</h2>
