@@ -80,16 +80,22 @@ function Homepage() {
   }
 
   function getWindDir(item) {
-    if (item.wind.deg >= 135 && item.wind.deg < 225) {
-      return 'South'
-    } else if (item.wind.deg >= 225 && item.wind.deg < 315) {
-      return 'West'
-    } else if (item.wind.deg >= 315 && item.wind.deg <= 360 || item.wind.deg >= 0 && item.wind.deg < 45) {
-      return 'North'
-    } else if (item.wind.deg >= 45 && item.wind.deg < 135) {
+    if (item.wind.deg >= 22.5 && item.wind.deg < 67.5) {
+      return 'Northeast'
+    } else if (item.wind.deg >= 67.5 && item.wind.deg < 112.5) {
       return 'East'
+    } else if (item.wind.deg >= 112.5 && item.wind.deg < 157.5) {
+      return 'Southeast'
+    } else if (item.wind.deg >= 157.5 && item.wind.deg < 202.5) {
+      return 'South'
+    } else if (item.wind.deg >= 202.5 && item.wind.deg < 247.5) {
+      return 'Southwest'
+    } else if (item.wind.deg >= 247.5 && item.wind.deg < 292.5) {
+      return 'West'
+    } else if (item.wind.deg >= 292.5 && item.wind.deg < 337.5) {
+      return 'Northwest'
     } else {
-      return 'Error (wind direction not found)'
+      return 'North'
     }
   }
 
@@ -163,7 +169,7 @@ function Homepage() {
                 </h2>
               </div>
               <div className='gridCard'>
-                <h3>Wind direction:</h3>
+                <h3>Wind from:</h3>
                 <h2>
                   {getWindDir(weatherData)} ({weatherData.wind.deg + '°'})
                 </h2>
