@@ -1,15 +1,21 @@
 import { useEffect, useState } from 'react'
 import '../App.css'
 import Spinner from '../components/Spinner'
+import Search from '../components/Search'
 
 function Homepage() {
   const [lat, setLat] = useState({})
   const [long, setLong] = useState({})
   const [weatherData, setWeatherData] = useState([])
   const [newLocation, setNewLocation] = useState()
+  const [search, setSearch] = useState(false)
 
   useEffect(() => {
     async function fetchWeather() {
+      if (search) {
+        return
+      }
+
       navigator.geolocation.getCurrentPosition(function (position) {
         if (parseFloat(localStorage.getItem('lat')) !== position.coords.latitude || parseFloat(localStorage.getItem('long')) !== position.coords.longitude) {
           setLat(position.coords.latitude)
@@ -25,16 +31,13 @@ function Homepage() {
         }
       })
 
-      console.log(lat, long)
       if (typeof (lat) === 'object' || typeof (long) === 'object') {
-        console.log('lat or long is 0')
         setWeatherData([])
         return
       }
 
       // If the data is less than 10 minutes old, don't fetch new data
       if (localStorage.getItem('fetchTime') && new Date().getTime() - localStorage.getItem('fetchTime') < 600000) {
-        console.log('data is less than 10 minutes old')
         if (!newLocation) {
           setWeatherData(JSON.parse(localStorage.getItem('weatherData')))
           return
@@ -44,7 +47,6 @@ function Homepage() {
       await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${import.meta.env.VITE_API_KEY}`)
         .then(res => res.json())
         .then(result => {
-          console.log(result)
           setWeatherData(result);
           localStorage.setItem('weatherData', JSON.stringify(result));
           localStorage.setItem('fetchTime', new Date().getTime());
@@ -54,7 +56,7 @@ function Homepage() {
     }
 
     fetchWeather()
-  }, [lat, long])
+  }, [lat, long, search])
 
   // I used these for wind names and speeds: https://www.weather.gov/mfl/beaufort https://www.smhi.se/kunskapsbanken/meteorologi/vind/skalor-for-vindhastighet-1.252     
   function getWind(item) {
@@ -78,23 +80,52 @@ function Homepage() {
   }
 
   function getWindDir(item) {
-    if (item.wind.deg >= 135 && item.wind.deg < 225) {
-      return 'South'
-    } else if (item.wind.deg >= 225 && item.wind.deg < 315) {
-      return 'West'
-    } else if (item.wind.deg >= 315 && item.wind.deg <= 360 || item.wind.deg >= 0 && item.wind.deg < 45) {
-      return 'North'
-    } else if (item.wind.deg >= 45 && item.wind.deg < 135) {
+    if (item.wind.deg >= 22.5 && item.wind.deg < 67.5) {
+      return 'Northeast'
+    } else if (item.wind.deg >= 67.5 && item.wind.deg < 112.5) {
       return 'East'
+    } else if (item.wind.deg >= 112.5 && item.wind.deg < 157.5) {
+      return 'Southeast'
+    } else if (item.wind.deg >= 157.5 && item.wind.deg < 202.5) {
+      return 'South'
+    } else if (item.wind.deg >= 202.5 && item.wind.deg < 247.5) {
+      return 'Southwest'
+    } else if (item.wind.deg >= 247.5 && item.wind.deg < 292.5) {
+      return 'West'
+    } else if (item.wind.deg >= 292.5 && item.wind.deg < 337.5) {
+      return 'Northwest'
     } else {
-      return 'Error (wind direction not found)'
+      return 'North'
     }
+  }
+
+  function getPlace() {
+    setSearch(true)
+
+    const test = weatherData.name || 'test'
+    if (document.getElementById('search').value === '' || document.getElementById('search').value.toLowerCase() == test.toLowerCase()) {
+      return
+    }
+
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${document.getElementById('search').value}&appid=${import.meta.env.VITE_API_KEY}`)
+      .then(res => res.json())
+      .then(result => {
+        if (result.cod === '404') {
+          return
+        }
+        setWeatherData(result);
+        setLat(result.coord.lat)
+        setLong(result.coord.lon)
+      }).catch(err => {
+        console.log(err)
+      });
   }
 
   return (
     <>
       <section className='autoWidth'>
         <h1>Darth Väder</h1>
+        <Search getPlace={getPlace} search={search} setSearch={setSearch} />
         {weatherData.main ? (
           <>
             <div className='grid' data-rows='masonry'>
@@ -134,24 +165,24 @@ function Homepage() {
                   </div>
                 ) : <></>}
               <div className='gridCard'>
-                <h3>Clouds:</h3>
-                <h2>Sky coverage: {weatherData.clouds.all + '%'}</h2>
-              </div>
-              <div className='gridCard'>
-                <h3>Pressure:</h3>
-                <h2>{weatherData.main.pressure} hPa</h2>
-              </div>
-              <div className='gridCard'>
                 <h3>Wind:</h3>
                 <h2>
                   {getWind(weatherData)} ({weatherData.wind.speed + ' m/s'})
                 </h2>
               </div>
               <div className='gridCard'>
-                <h3>Wind direction:</h3>
+                <h3>Wind from:</h3>
                 <h2>
                   {getWindDir(weatherData)} ({weatherData.wind.deg + '°'})
                 </h2>
+              </div>
+              <div className='gridCard'>
+                <h3>Clouds:</h3>
+                <h2>Sky coverage: {weatherData.clouds.all + '%'}</h2>
+              </div>
+              <div className='gridCard'>
+                <h3>Pressure:</h3>
+                <h2>{weatherData.main.pressure} hPa</h2>
               </div>
               <div className='gridCard'>
                 <h3>Humidity:</h3>
@@ -163,12 +194,12 @@ function Homepage() {
               </div>
               <div className='gridCard'>
                 <h3>Sunrise:</h3>
-                <h2>{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</h2>
+                <h2>{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString("en-GB")}</h2>
                 {/* idk how Copilot got *1000 but it seems to work */}
               </div>
               <div className='gridCard'>
                 <h3>Sunset:</h3>
-                <h2>{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</h2>
+                <h2>{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString("en-GB")}</h2>
               </div>
             </div>
             {lat && long ? (
