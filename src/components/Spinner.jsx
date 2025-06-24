@@ -6,7 +6,9 @@ function Spinner() {
     return (
         <>
             <h2>{quotes[Math.floor(Math.random() * quotes.length)]}</h2>
-            <div data-abs="true" className="spinner"></div>
+            <div className='flexSpinner'>
+                <div className="spinner"></div>
+            </div>
         </>
     )
 }
