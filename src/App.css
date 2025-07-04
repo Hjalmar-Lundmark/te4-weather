@@ -84,6 +84,10 @@ main {
   margin-inline: auto;
 }
 
+.map {
+  background-color: none;
+}
+
 .content {
   display: flex;
   flex-direction: column;

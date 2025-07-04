@@ -204,6 +204,7 @@ function Homepage() {
             </div>
             {lat && long ? (
               <>
+                <img src={`https://tile.openweathermap.org/map/temp_new/3/4/2.png?appid=${import.meta.env.VITE_API_KEY}`} alt={weatherData.weather[0].description} width={1000} height={1000} className='map' />
                 <iframe src={`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d269.27453942029365!2d${long}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ssv!2sse!4v1695801572532!5m2!1ssv!2sse'`} width="600" height="450" loading="lazy" ></iframe>
               </>
             ) : (
